@@ -464,6 +464,65 @@ Ext.define('PMG.Utils', {
 		}
 	    ]
 	},
+	3006: {
+	    onlineHelp: 'pmg_mailfilter_what',
+	    iconCls: 'fa fa-pause',
+	    xtype: 'proxmoxWindowEdit',
+	    subdir: 'quotafilter',
+	    width: 400,
+	    subject: gettext('Quota Filter'),
+	    items: [
+			{
+		    xtype: 'combobox',
+		    displayField: 'text',
+		    labelWidth: 150,
+		    valueField: 'mimetype',
+		    name: 'quotatype',
+		    editable: true,
+		    queryMode: 'local',
+		    store: ['user','anyuser','domain','anydomain'],
+		    fieldLabel: gettext('Quota Type'),
+		    anyMatch: true,
+		    matchFieldWidth: false,
+		    listeners: {
+				change: function(cb, value) {
+					var me = this;
+					if (value.startsWith('any')){
+						me.up().down('field[name=quotatarget]').hide().setValue('');
+					} else {
+						me.up().down('field[name=quotatarget]').show();
+					}
+				}
+			}
+		},
+		{
+		    xtype: 'numberfield',
+		    name: 'quotalimit',
+		    reference: 'quotalimit',
+		    fieldLabel: gettext('Max mails'),
+		    labelWidth: 150,
+		    allowBlank: false,
+		    minValue: 0
+		},
+		{
+		    xtype: 'numberfield',
+		    name: 'quotaframe',
+		    reference: 'quotaframe',
+		    fieldLabel: gettext('Time frame (in seconds)'),
+		    labelWidth: 150,
+		    allowBlank: false,
+		    minValue: 0
+		},
+		{
+		    xtype: 'textfield',
+		    name: 'quotatarget',
+		    reference: 'quotatarget',
+		    fieldLabel: gettext('Target'),
+		    labelWidth: 150,
+		    allowBlank: true,
+		}
+	    ]
+	},
 	4002: {
 	    onlineHelp: 'pmg_mailfilter_action',
 	    xtype: 'proxmoxWindowEdit',
