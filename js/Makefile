@@ -44,6 +44,11 @@ JSSRC=							\
 	MailProxyTLSPanel.js				\
 	MailProxyTLSDomains.js				\
 	Transport.js					\
+	AdvancedTransport.js					\
+	MailProxyAdvancedMainConfiguration.js	\
+	AdvancedMasterTransport.js		\
+	AdvancedMasterTransportOptions.js \
+	MailProxyAdvancedMasterConfiguration.js \
 	MyNetworks.js					\
 	RelayDomains.js					\
 	MailProxyConfiguration.js			\

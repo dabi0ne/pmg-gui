@@ -57,6 +57,26 @@ Ext.define('PMG.store.NavigationStore', {
 			leaf: true
 		    },
 		    {
+			text: gettext('Advanced Postfix'),
+			iconCls: 'fa fa-envelope-o',
+			path: 'pmgMailProxyConfiguration',
+			expanded: true,
+			children: [
+					{
+						text: gettext('main.cf'),
+						iconCls: 'fa fa-envelope-o',
+						path: 'pmgMailProxyAdvancedMainConfiguration',
+						leaf: true
+				    },	
+				    {
+						text: gettext('master.cf'),
+						iconCls: 'fa fa-envelope-o',
+						path: 'pmgMailProxyAdvancedMasterConfiguration',
+						leaf: true
+				    },	
+				]
+		    },
+		    {
 			text: gettext('Spam Detector'),
 			iconCls: 'fa fa-bullhorn',
 			path: 'pmgSpamDetectorConfiguration',
