@@ -76,6 +76,30 @@ Ext.define('PMG.MailProxyAdvancedMasterTransport', {
 				    win.load();
 				    win.on('destroy', me.reload);
 				    win.show();
+			},
+    	},
+    	{
+    		text: gettext('Reload Postfix'),
+			handler: function() {
+				    Proxmox.Utils.API2Request({
+					    url: '/api2/extjs/config/advanced/mtransport/',
+					    params: {},
+					    method: 'POST',
+					    failure: function(response, opts) {
+							Ext.Msg.alert(gettext('Error'), response.htmlStatus);
+					    },
+					    success: function(response, opts) {
+						var win = Ext.create('Ext.window.MessageBox',{
+						    closeAction: 'destroy'
+						}).show({
+						    title: gettext('Info'),
+						    message: Ext.String.format("Service Postfix reload : OK"),
+						    buttons: Ext.Msg.OK,
+						    icon: Ext.MessageBox.INFO
+						});
+				
+					    }
+					});
 			}
     	}
     ];
