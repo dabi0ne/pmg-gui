@@ -1,0 +1,15 @@
+# Build artifacts
+js/OnlineHelpInfo.js
+js/pmgmanagerlib.js
+js/pmgmanagerlib-mobile.js
+
+# Debian build
+build/
+*.deb
+*.changes
+*.buildinfo
+
+# Editor files
+*~
+.*.swp
+.*.swo
