@@ -1,68 +1,62 @@
 /*global Proxmox*/
 Ext.define('PMG.PostfixConfig', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.grid.GridPanel',
     alias: 'widget.pmgPostfixConfig',
 
     title: gettext('Postfix Configuration'),
 
     border: false,
-    scrollable: true,
 
-    layout: {
-	type: 'vbox',
-	align: 'stretch'
+    nodename: undefined,
+
+    store: {
+	fields: ['parameter', 'value'],
+	sorters: 'parameter'
     },
 
-    bodyPadding: 10,
+    controller: {
+	xclass: 'Ext.app.ViewController',
 
-    initComponent: function() {
+	init: function(view) {
+	    if (view.nodename) {
+		view.setNodename(view.nodename);
+	    }
+	},
+
+	control: {
+	    '#': {
+		activate: function() {
+		    this.view.store.load(); // reload
+		}
+	    }
+	}
+    },
+
+    columns: [
+	{
+	    text: gettext('Parameter'),
+	    dataIndex: 'parameter',
+	    flex: 1,
+	    sortable: true
+	},
+	{
+	    text: gettext('Value'),
+	    dataIndex: 'value',
+	    flex: 2,
+	    sortable: false
+	}
+    ],
+
+    setNodename: function(nodename) {
 	var me = this;
 
-	var store = Ext.create('Ext.data.Store', {
-	    fields: ['parameter', 'value'],
-	    proxy: {
-		type: 'proxmox',
-		url: '/api2/json/nodes/' + me.nodename + '/postfix/main'
-	    },
-	    autoLoad: true
+	me.nodename = nodename;
+
+	me.store.setProxy({
+	    type: 'proxmox',
+	    url: "/api2/json/nodes/" + me.nodename + "/postfix/main"
 	});
 
-	var grid = Ext.create('Ext.grid.Panel', {
-	    store: store,
-	    stateful: false,
-	    columns: [
-		{
-		    text: gettext('Parameter'),
-		    dataIndex: 'parameter',
-		    flex: 1,
-		    sortable: true
-		},
-		{
-		    text: gettext('Value'),
-		    dataIndex: 'value',
-		    flex: 2,
-		    sortable: false
-		}
-	    ],
-	    flex: 1
-	});
-
-	Ext.apply(me, {
-	    items: [grid],
-	    tbar: [
-		{
-		    text: gettext('Reload'),
-		    handler: function() {
-			store.reload();
-		    }
-		}
-	    ]
-	});
-
-	me.callParent();
-
-	me.on('activate', function() {
-	    store.reload();
-	});
+	me.store.load();
     }
 });
