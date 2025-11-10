@@ -56,6 +56,11 @@ Ext.define('PMG.ServerAdministration', {
 	    log_select_timespan: 1
 	},
 	{
+	    xtype: 'pmgPostfixConfig',
+	    itemId: 'postfixconfig',
+	    nodename: Proxmox.NodeName
+	},
+	{
 	    xtype: 'proxmoxNodeTasks',
 	    itemId: 'tasks',
 	    title: gettext('Tasks'),
